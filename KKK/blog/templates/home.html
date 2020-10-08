@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+
+<header class="masthead">
+    <div class="container">
+        <div class="row">
+            <div class=" col-md-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h3 class=" site-heading my-4 mt- "> Welcome to KavithaiKaaran Kirukkals ..!!</h3>
+                    <p>Hope You doing Well !!</p>
+                    <a href="{% url 'add_post' %}"  class="btn btn-info">Add Post</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <h5 class="welcome-message"> Explore the world of Imagination....!!!</h5>
+    {% for post in object_list %}
+        <div class="card w-50" >
+            <div class="row no-gutters">
+                <div class="col-md-3">
+                    <a href="{% url 'post' post.pk %}">
+                            <img src="{{post.image.url}}" alt="{{post.title}}" class="card-img" width="75" height="200"></a>
+                </div>
+            <div class="col">
+                <div class="card-body">
+                    <h2 class="card-title">{{post.title}}</h2>
+                    <p class="card-text"><small class="text-muted">{{post.category}} - {{post.author.first_name}}
+                    {{post.author.last_name}} - {{post.posted_on}}</small></p>
+                    <p class="card-text">{{post.description|slice:":50"|safe}}</p>
+                    <a class="btn btn-info mb-2 float-right mb-2" href="{% url 'post' post.pk %}"
+                       role="button">Share your Thoughts !! </a>
+                </div>
+            </div>
+            </div>
+
+        </div>
+{% endfor %}
+
+</div>
+{% endblock %}

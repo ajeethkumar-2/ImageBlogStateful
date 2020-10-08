@@ -1,0 +1,111 @@
+{% load static %}
+
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.ico' %}">
+    <title>
+        {% block title %}
+            KavithaiKaaran Kirukkals
+        {% endblock %}
+    </title>
+
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark shadow" style="background-color:black;">
+        <div class="container-fluid">
+            <h5><a class="navbar-brand mt-2" href="{%url 'home' %}">
+                <img src="{% static 'images/KKK logo.jpeg' %}" width="30" height="30" class="d-inline-block align-top"style="margin-0px; padding:0px;">
+                <span style="color: #b3cbcb" >KavithaiKaaran</span> Kirukkals</a>
+            </h5>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <!--Category Menu Code -->
+                    {% if cat_menu %}
+                        <li class="nav-item dropdown" >
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Categories
+                            </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'add_category' %}">Add Category</a>
+                            {% for item in cat_menu %}
+                                <a class="dropdown-item" href="{% url 'categories' item|slugify %}">{{ item }}</a>
+                            {% endfor %}
+                        </div>
+                        </li>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{user.first_name}} {{ user.last_name }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                {% if user.profile.id %}
+                                    <a class="dropdown-item" href="{% url 'user_profile' user.profile.id %}">View Profile</a>
+                                    <a class="dropdown-item" href="{% url 'edit_user_profile' user.profile.id %}">Edit Profile</a>
+                                    <a class="dropdown-item" href="{% url 'edit_login_settings' %}">Edit Login Settings</a>
+                                    <a class="dropdown-item" href="{% url 'logout' %}">LogOut</a>
+                                {% else %}
+                                    <a class="dropdown-item" href="{% url 'create_user_profile' %}">Create Profile</a>
+                                    <a class="dropdown-item" href="{% url 'edit_login_settings' %}">Edit Login Settings</a>
+                                    <a class="dropdown-item" href="{% url 'logout' %}">LogOut</a>
+                                {% endif %}
+                            </div>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register' %}">Register</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">LogIn</a>
+                        </li>
+
+                        {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+        {% block content %}
+
+        {% endblock %}
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+    <br>
+    <div class="card  w-100">
+        <div class="card-header text-muted text-center bg-light">
+           <h5>About Us</h5>
+        </div>
+        <div >
+            <h6 class="card-body text-center">
+                This blog is to share your to share your thoughts.
+                Expose Your talents to the world via our platform</h6>
+        </div>
+    </div>
+    <br>
+
+    <div>
+        <nav class="navbar fixed-bottom navbar-dark shadow" style="background-color:black";>
+          <h6 class="navbar-brand mt-2">Copyright &copy; <span style="color: #b3cbcb">Kavithaikaaran</span> Kirukals</h6>
+            <a class="float-right" href="https://instagram.com/kavithaikaaran_kirukkals?igshid=6vgx7ttbsmy4">
+                <img src="https://img.icons8.com/fluent/48/000000/instagram-new.png"/>KavithaiKaaran Kirukals</a>
+        </nav>
+    </div>
+
+  </body>
+</html>

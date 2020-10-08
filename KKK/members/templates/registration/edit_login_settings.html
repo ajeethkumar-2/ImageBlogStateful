@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Edit Login Settings !!{% endblock %}
+{% block content %}
+
+<h1>Edit Login Settings !!</h1>
+<hr>
+<br>
+{% if user.is_authenticated %}
+    {% if user.id == profile.user.id %}
+        <div class="card mb-1" >
+          <div class="row no-gutters">
+            <div class="col-md-2">
+                {% if user.profile_pic %}
+                        <img src="{{ user.profile_pic.url }}"  class="card-img">
+                    {% else %}
+                        <img src="{% static 'images/default-profile-picture.png' %}"  class="card-img">
+                    {% endif %}
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{user.first_name }} {{ user.last_name }}</h5>
+                <p class="small text-muted">
+                        <a href="{{ user.instagram_url }}" >Instagram</a>
+                  <p class="card-text">{{ user.bio }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+            <form method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button class="btn btn-secondary">Update Profile</button>
+            </form>
+        </div>
+        % else %}
+        You are not the wrong person to edit this profile..!!!
+    {% endif %}
+
+{% else %}
+    You are not allowed Here..!!!
+{% endif %}
+
+
+
+{% endblock %}
+
+
+

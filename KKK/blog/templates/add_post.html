@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Create New Post !!{% endblock %}
+{% block content %}
+
+
+
+
+<div class="container w-50 mt-5">
+        <div class="card ">
+            <div class="card-header text-center">
+                <h4>Add Post</h4>
+            </div>
+        </div>
+
+    {% if user.is_authenticated %}
+            <form class="card body col-sm-12 form-group" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                    {{form.media}}
+                    {{form.as_p}}
+                <button type="submit" >Post</button>
+            </form>
+
+    {% endif %}
+</div>
+
+{% endblock %}
+
+
+
